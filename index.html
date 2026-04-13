@@ -234,7 +234,7 @@
       <div class="info-item">
         <span class="info-item-icon">📍</span>
         <p class="info-item-label">Where</p>
-        <p class="info-item-value" id="display-location">—</p>
+        <a class="info-item-value" id="display-location" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-decoration-color: var(--terra-light); cursor: pointer;"></a>
       </div>
     </div>
   </div>
@@ -398,7 +398,8 @@
   function renderSettings(s) {
     document.getElementById('display-date').textContent          = s.date;
     document.getElementById('hero-date-display').textContent     = s.date;
-    document.getElementById('display-location').textContent      = s.location;
+    document.getElementById('display-location').href = https://maps.app.goo.gl/iUBwZLupPzzySSoBA;
+    document.getElementById('display-location').textContent = s.location;
     document.getElementById('hero-location-display').textContent = s.location;
     document.getElementById('display-bring').innerHTML           = s.bring;
 
