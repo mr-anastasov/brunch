@@ -36,10 +36,11 @@
     min-height: 100vh;
   }
 
+  /* ---- HERO ---- */
   .hero {
     background: var(--warm-white);
     border-bottom: 1px solid var(--border);
-    padding: 3rem 1.5rem 2.5rem;
+    padding: 2.25rem 1.5rem 2rem;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -60,122 +61,143 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--terracotta);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
   .hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 7vw, 4rem);
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
     font-weight: 400;
     color: var(--ink);
     line-height: 1.1;
-    margin-bottom: 0.5rem;
+    white-space: nowrap;
     cursor: default;
     user-select: none;
   }
-  .hero h1 em { color: var(--terracotta); font-style: italic; }
-  .hero-date { font-size: 15px; color: var(--ink-mid); margin-bottom: 0.35rem; }
-  .hero-location { font-size: 14px; color: var(--ink-soft); }
   .hero-divider {
-    width: 48px; height: 2px;
+    width: 40px; height: 2px;
     background: linear-gradient(90deg, var(--terracotta), var(--mustard));
     border-radius: 2px;
-    margin: 1.5rem auto;
+    margin: 1.1rem auto 0;
   }
 
-  .container {
-    max-width: 760px;
+  /* ---- LAYOUT ---- */
+  .page-body {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 1.25rem 4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    padding: 1.75rem 1.5rem 3rem;
   }
 
+  /* Desktop: 3 columns */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  /* Mobile: single column */
+  @media (max-width: 860px) {
+    .three-col {
+      grid-template-columns: 1fr;
+    }
+    .page-body {
+      max-width: 560px;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+  }
+
+  .col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  /* ---- CARDS ---- */
   .card {
     background: var(--warm-white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.5rem 1.5rem 1.75rem;
+    padding: 1.25rem 1.25rem 1.5rem;
   }
   .card-label {
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    margin-bottom: 1rem;
+    margin-bottom: 0.9rem;
     display: flex;
     align-items: center;
     gap: 6px;
   }
   .card-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  @media (max-width: 480px) { .info-grid { grid-template-columns: 1fr; } }
-  .info-item { background: var(--cream); border-radius: 10px; padding: 1rem 1.1rem; }
-  .info-item-icon { font-size: 20px; margin-bottom: 0.4rem; display: block; }
-  .info-item-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.2rem; }
-  .info-item-value { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.4; }
-  .info-item-value.editable-date { color: var(--terracotta); font-family: var(--font-display); font-size: 16px; }
+  /* ---- DETAILS ---- */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .info-item { background: var(--cream); border-radius: 10px; padding: 0.85rem 1rem; }
+  .info-item-icon { font-size: 18px; margin-bottom: 0.3rem; display: block; }
+  .info-item-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.2rem; }
+  .info-item-value { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .info-item-value.editable-date { color: var(--terracotta); font-family: var(--font-display); font-size: 15px; }
 
-  #menu-list { display: flex; flex-direction: column; gap: 0.5rem; }
-  .menu-item { display: flex; align-items: baseline; gap: 10px; font-size: 15px; color: var(--ink-mid); padding: 0.4rem 0; border-bottom: 1px dashed var(--border); }
+  /* ---- MENU ---- */
+  #menu-list { display: flex; flex-direction: column; }
+  .menu-item { display: flex; align-items: baseline; gap: 9px; font-size: 14px; color: var(--ink-mid); padding: 0.35rem 0; border-bottom: 1px dashed var(--border); }
   .menu-item:last-child { border-bottom: none; }
-  .menu-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta); flex-shrink: 0; margin-top: 6px; }
+  .menu-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--terracotta); flex-shrink: 0; margin-top: 7px; }
   .menu-item-name { flex: 1; }
-  .menu-item-note { font-size: 12px; color: var(--ink-soft); font-style: italic; }
+  .menu-item-note { font-size: 11px; color: var(--ink-soft); font-style: italic; }
 
-  .bring-note { background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 0.9rem 1.1rem; font-size: 14px; color: var(--ink-mid); line-height: 1.5; }
+  /* ---- BRING ---- */
+  .bring-note { background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 0.8rem 1rem; font-size: 13px; color: var(--ink-mid); line-height: 1.5; }
   .bring-note strong { color: var(--sage); font-weight: 500; }
 
-  .rsvp-question { text-align: center; margin-bottom: 1.25rem; }
-  .rsvp-question p { font-family: var(--font-display); font-size: 1.2rem; color: var(--ink); margin-bottom: 0.75rem; }
-  .rsvp-buttons { display: flex; gap: 12px; justify-content: center; margin-bottom: 1rem; }
-  .rsvp-btn { padding: 10px 2rem; border-radius: 100px; border: 1.5px solid var(--border); font-family: var(--font-body); font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s ease; background: transparent; color: var(--ink-mid); }
+  /* ---- RSVP ---- */
+  .rsvp-question { text-align: center; margin-bottom: 1rem; }
+  .rsvp-question p { font-family: var(--font-display); font-size: 1.1rem; color: var(--ink); margin-bottom: 0.65rem; }
+  .rsvp-buttons { display: flex; gap: 10px; justify-content: center; margin-bottom: 0.9rem; flex-wrap: wrap; }
+  .rsvp-btn { padding: 9px 1.5rem; border-radius: 100px; border: 1.5px solid var(--border); font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s ease; background: transparent; color: var(--ink-mid); }
   .rsvp-btn:hover { transform: translateY(-1px); }
   .rsvp-btn.yes { border-color: var(--sage); color: var(--sage); }
   .rsvp-btn.yes:hover, .rsvp-btn.yes.active { background: var(--sage); color: white; }
   .rsvp-btn.no { border-color: var(--terracotta); color: var(--terracotta); }
   .rsvp-btn.no:hover, .rsvp-btn.no.active { background: var(--terracotta); color: white; }
 
-  .rsvp-form { display: none; flex-direction: column; gap: 0.75rem; animation: fadeIn 0.2s ease; }
+  .rsvp-form { display: none; flex-direction: column; gap: 0.65rem; animation: fadeIn 0.2s ease; }
   .rsvp-form.visible { display: flex; }
-  .rsvp-row { display: flex; gap: 10px; }
-  @media (max-width: 480px) { .rsvp-row { flex-direction: column; } }
-  .rsvp-input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: var(--font-body); font-size: 15px; background: var(--cream); color: var(--ink); outline: none; transition: border-color 0.15s; }
+  .rsvp-row { display: flex; gap: 8px; }
+  .rsvp-input { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-family: var(--font-body); font-size: 14px; background: var(--cream); color: var(--ink); outline: none; transition: border-color 0.15s; min-width: 0; }
   .rsvp-input:focus { border-color: var(--sage); }
   .rsvp-input::placeholder { color: var(--ink-soft); }
   select.rsvp-input { cursor: pointer; }
-  .rsvp-submit { padding: 11px 1.5rem; background: var(--terracotta); color: white; border: none; border-radius: 100px; font-family: var(--font-body); font-size: 15px; font-weight: 500; cursor: pointer; transition: opacity 0.15s, transform 0.1s; align-self: flex-end; }
+  .rsvp-submit { padding: 10px 1.25rem; background: var(--terracotta); color: white; border: none; border-radius: 100px; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s, transform 0.1s; align-self: flex-end; }
   .rsvp-submit:hover { opacity: 0.88; transform: translateY(-1px); }
   .rsvp-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-  .rsvp-decline-msg { display: none; text-align: center; font-family: var(--font-display); font-style: italic; color: var(--ink-soft); font-size: 1rem; padding: 0.5rem 0; animation: fadeIn 0.2s ease; }
+  .rsvp-decline-msg { display: none; text-align: center; font-family: var(--font-display); font-style: italic; color: var(--ink-soft); font-size: 0.95rem; padding: 0.4rem 0; animation: fadeIn 0.2s ease; }
   .rsvp-decline-msg.visible { display: block; }
-  .rsvp-success { display: none; background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 1rem 1.25rem; text-align: center; animation: fadeIn 0.25s ease; }
+  .rsvp-success { display: none; background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 0.9rem 1.1rem; text-align: center; animation: fadeIn 0.25s ease; }
   .rsvp-success.visible { display: block; }
-  .rsvp-success p { font-size: 15px; color: var(--ink-mid); }
+  .rsvp-success p { font-size: 14px; color: var(--ink-mid); }
   .rsvp-success strong { color: var(--sage); }
-  .rsvp-change { margin-top: 0.5rem; font-size: 12px; color: var(--ink-soft); text-decoration: underline; cursor: pointer; background: none; border: none; font-family: var(--font-body); }
+  .rsvp-change { margin-top: 0.4rem; font-size: 12px; color: var(--ink-soft); text-decoration: underline; cursor: pointer; background: none; border: none; font-family: var(--font-body); }
 
-  .guest-list { display: flex; flex-direction: column; gap: 0.5rem; }
-  .guest-empty { text-align: center; font-style: italic; color: var(--ink-soft); font-size: 14px; padding: 0.5rem 0; }
-  .guest-item { display: flex; align-items: center; gap: 10px; padding: 0.6rem 0.75rem; background: var(--cream); border-radius: 8px; animation: fadeIn 0.2s ease; }
-  .guest-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--terra-pale); border: 1.5px solid var(--terra-light); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px; color: var(--terracotta); flex-shrink: 0; text-transform: uppercase; }
+  /* ---- GUEST LIST ---- */
+  .guest-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .guest-empty { text-align: center; font-style: italic; color: var(--ink-soft); font-size: 13px; padding: 0.5rem 0; }
+  .guest-item { display: flex; align-items: center; gap: 9px; padding: 0.5rem 0.65rem; background: var(--cream); border-radius: 8px; animation: fadeIn 0.2s ease; }
+  .guest-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--terra-pale); border: 1.5px solid var(--terra-light); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11px; color: var(--terracotta); flex-shrink: 0; text-transform: uppercase; }
   .guest-info { flex: 1; }
-  .guest-name { font-size: 14px; font-weight: 500; color: var(--ink); }
-  .guest-plus { font-size: 12px; color: var(--ink-soft); }
-  .guest-count-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--terra-pale); border: 1px solid var(--terra-light); color: var(--terracotta); font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 100px; margin-bottom: 0.75rem; }
+  .guest-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .guest-plus { font-size: 11px; color: var(--ink-soft); }
+  .guest-count-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--terra-pale); border: 1px solid var(--terra-light); color: var(--terracotta); font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 100px; margin-bottom: 0.65rem; }
 
-  .loading-indicator { text-align: center; font-size: 13px; color: var(--ink-soft); padding: 1rem 0; }
+  .loading-indicator { text-align: center; font-size: 13px; color: var(--ink-soft); padding: 0.75rem 0; }
 
-  /* Admin panel */
+  /* ---- ADMIN PANEL ---- */
   #admin-panel {
     display: none;
     background: var(--warm-white);
     border: 1px dashed rgba(196,98,58,0.3);
     border-radius: var(--radius);
     padding: 1.5rem;
+    margin-top: 1.25rem;
     animation: fadeIn 0.25s ease;
   }
   #admin-panel.visible { display: block; }
@@ -193,18 +215,10 @@
   .admin-btn.danger { color: #b53a2f; border-color: rgba(181,58,47,0.3); }
   .admin-btn.danger:hover { background: #fdf0ef; }
   .admin-section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-soft); margin: 1.25rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .admin-status { font-size: 12px; color: var(--sage); margin-top: 0.5rem; min-height: 18px; }
 
-  /* Invisible hotspot — fixed bottom-right */
-  #hotspot {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 28px;
-    height: 28px;
-    cursor: default;
-    z-index: 9999;
-    background: transparent;
-  }
+  /* Invisible hotspot */
+  #hotspot { position: fixed; bottom: 0; right: 0; width: 28px; height: 28px; cursor: default; z-index: 9999; background: transparent; }
 
   footer { text-align: center; padding: 1rem; font-size: 12px; color: var(--ink-soft); }
 
@@ -215,129 +229,144 @@
 
 <header class="hero">
   <p class="hero-eyebrow">You're invited</p>
-  <h1 id="hero-title">Saturday<br><em>Brunch</em></h1>
+  <h1 id="hero-title">Saturday Brunch</h1>
   <div class="hero-divider"></div>
-  <p class="hero-date" id="hero-date-display">—</p>
-  <p class="hero-location" id="hero-location-display">—</p>
 </header>
 
-<main class="container">
+<div class="page-body">
+  <div class="three-col">
 
-  <div class="card">
-    <p class="card-label">Details</p>
-    <div class="info-grid">
-      <div class="info-item">
-        <span class="info-item-icon">🗓</span>
-        <p class="info-item-label">When</p>
-        <p class="info-item-value editable-date" id="display-date">—</p>
-      </div>
-      <div class="info-item">
-        <span class="info-item-icon">📍</span>
-        <p class="info-item-label">Where</p>
-        <a class="info-item-value" id="display-location" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-decoration-color: var(--terra-light); cursor: pointer;"></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <p class="card-label">Menu</p>
-    <div id="menu-list"><p class="loading-indicator">Loading…</p></div>
-  </div>
-
-  <div class="card">
-    <p class="card-label">What to bring</p>
-    <div class="bring-note" id="display-bring"></div>
-  </div>
-
-  <div class="card">
-    <p class="card-label">RSVP</p>
-    <div id="rsvp-existing" style="display:none;">
-      <div class="rsvp-success visible">
-        <p id="rsvp-existing-msg"></p>
-        <button class="rsvp-change" onclick="clearMyRsvp()">Change my response</button>
-      </div>
-    </div>
-    <div id="rsvp-new">
-      <div class="rsvp-question">
-        <p>Will you be joining us?</p>
-        <div class="rsvp-buttons">
-          <button class="rsvp-btn yes" onclick="selectRsvp('yes')">Yes, I'll be there ✓</button>
-          <button class="rsvp-btn no" onclick="selectRsvp('no')">Can't make it this time</button>
+    <!-- Column 1: Details + RSVP -->
+    <div class="col">
+      <div class="card">
+        <p class="card-label">Details</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-item-icon">🗓</span>
+            <p class="info-item-label">When</p>
+            <p class="info-item-value editable-date" id="display-date">—</p>
+          </div>
+          <div class="info-item">
+            <span class="info-item-icon">📍</span>
+            <p class="info-item-label">Where</p>
+            <a class="info-item-value" id="display-location"
+               href="https://maps.app.goo.gl/iUBwZLupPzzySSoBA"
+               target="_blank" rel="noopener"
+               style="color:inherit;text-decoration:underline;text-decoration-color:var(--terra-light);cursor:pointer;display:block;">—</a>
+          </div>
         </div>
       </div>
-      <div class="rsvp-decline-msg" id="decline-msg">
-        <p>No worries — hope to see you next month! 🌿</p>
-      </div>
-      <form class="rsvp-form" id="rsvp-form" onsubmit="submitRsvp(event)">
-        <div class="rsvp-row">
-          <input type="text" class="rsvp-input" id="rsvp-name" placeholder="Your name" required autocomplete="given-name">
-          <select class="rsvp-input" id="rsvp-headcount">
-            <option value="1">Just me</option>
-            <option value="2">Me + 1</option>
-            <option value="3">Me + 2</option>
-            <option value="4">Me + 3</option>
-          </select>
+
+      <div class="card">
+        <p class="card-label">RSVP</p>
+        <div id="rsvp-existing" style="display:none;">
+          <div class="rsvp-success visible">
+            <p id="rsvp-existing-msg"></p>
+            <button class="rsvp-change" onclick="clearMyRsvp()">Change my response</button>
+          </div>
         </div>
-        <button type="submit" class="rsvp-submit" id="rsvp-submit-btn">Confirm RSVP →</button>
-      </form>
+        <div id="rsvp-new">
+          <div class="rsvp-question">
+            <p>Will you be joining us?</p>
+            <div class="rsvp-buttons">
+              <button class="rsvp-btn yes" onclick="selectRsvp('yes')">Yes, I'll be there ✓</button>
+              <button class="rsvp-btn no" onclick="selectRsvp('no')">Can't make it</button>
+            </div>
+          </div>
+          <div class="rsvp-decline-msg" id="decline-msg">
+            <p>No worries — hope to see you next month! 🌿</p>
+          </div>
+          <form class="rsvp-form" id="rsvp-form" onsubmit="submitRsvp(event)">
+            <div class="rsvp-row">
+              <input type="text" class="rsvp-input" id="rsvp-name" placeholder="Your name" required autocomplete="given-name">
+              <select class="rsvp-input" id="rsvp-headcount" style="max-width:110px;">
+                <option value="1">Just me</option>
+                <option value="2">Me + 1</option>
+                <option value="3">Me + 2</option>
+                <option value="4">Me + 3</option>
+              </select>
+            </div>
+            <button type="submit" class="rsvp-submit" id="rsvp-submit-btn">Confirm RSVP →</button>
+          </form>
+        </div>
+      </div>
     </div>
+
+    <!-- Column 2: Menu + What to bring -->
+    <div class="col">
+      <div class="card">
+        <p class="card-label">Menu</p>
+        <div id="menu-list"><p class="loading-indicator">Loading…</p></div>
+      </div>
+
+      <div class="card">
+        <p class="card-label">What to bring</p>
+        <div class="bring-note" id="display-bring"></div>
+      </div>
+    </div>
+
+    <!-- Column 3: Guest list -->
+    <div class="col">
+      <div class="card">
+        <p class="card-label">Who's coming</p>
+        <div id="guest-count-area"></div>
+        <div class="guest-list" id="guest-list">
+          <p class="loading-indicator">Loading…</p>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="card">
-    <p class="card-label">Who's coming</p>
-    <div id="guest-count-area"></div>
-    <div class="guest-list" id="guest-list">
-      <p class="loading-indicator">Loading…</p>
-    </div>
-  </div>
-
-  <!-- Admin panel: hidden, revealed only via unlock sequence -->
+  <!-- Admin panel — hidden, full width below columns -->
   <div id="admin-panel">
     <h3>Host settings</h3>
 
     <p class="admin-section-title">Page content</p>
-    <div class="admin-field">
-      <label>Date & time</label>
-      <input type="text" id="admin-date" placeholder="e.g. Saturday, May 17 · 11:00 AM">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+      <div class="admin-field">
+        <label>Date & time</label>
+        <input type="text" id="admin-date" placeholder="Saturday, May 17 · 11:00 AM">
+      </div>
+      <div class="admin-field">
+        <label>Location display text</label>
+        <input type="text" id="admin-location" placeholder="12 Elm Street, Apt 4">
+      </div>
     </div>
-    <div class="admin-field">
-      <label>Location</label>
-      <input type="text" id="admin-location" placeholder="e.g. 12 Elm Street, Apt 4">
-    </div>
-    <div class="admin-field">
-      <label>Menu — one item per line, note after a dash: Eggs Benedict - vegetarian</label>
-      <textarea id="admin-menu" placeholder="Eggs Benedict&#10;Avocado toast - vegan option&#10;Fresh fruit platter&#10;Mimosas"></textarea>
-    </div>
-    <div class="admin-field">
-      <label>What to bring note</label>
-      <textarea id="admin-bring"></textarea>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+      <div class="admin-field">
+        <label>Menu — one item per line, note after dash</label>
+        <textarea id="admin-menu" placeholder="Eggs Benedict&#10;Avocado toast - vegan option&#10;Mimosas"></textarea>
+      </div>
+      <div class="admin-field">
+        <label>What to bring note</label>
+        <textarea id="admin-bring"></textarea>
+      </div>
     </div>
     <div class="admin-actions">
-      <button class="admin-btn primary" onclick="saveAdminSettings()">Save & apply</button>
+      <button class="admin-btn primary" onclick="saveAdminSettings()">Save & publish</button>
     </div>
+    <div class="admin-status" id="admin-status"></div>
 
     <p class="admin-section-title">Guest list</p>
-    <div id="admin-guest-summary" style="font-size: 13px; color: var(--ink-mid); margin-bottom: 0.75rem;"></div>
+    <div id="admin-guest-summary" style="font-size:13px;color:var(--ink-mid);margin-bottom:0.75rem;"></div>
     <div class="admin-actions">
       <button class="admin-btn danger" onclick="resetGuestList()">Reset guest list after brunch</button>
     </div>
+    <div class="admin-status" id="admin-reset-status"></div>
   </div>
+</div>
 
-</main>
-
-<!-- Invisible hotspot: fixed bottom-right corner -->
 <div id="hotspot"></div>
-
 <footer><p>See you Saturday ☀️</p></footer>
 
 <script>
   const BIN_ID  = '69dcb2a8856a6821892a9eb4';
   const API_KEY = '$2a$10$NMkk/khZu4tVrBQZw2rYtedlIuaKEs8AU1h6ZdIInu2YEXYzaOYey';
   const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-  const MY_RSVP_KEY  = 'my_brunch_rsvp';
-  const SETTINGS_KEY = 'brunch_settings';
+  const MY_RSVP_KEY = 'my_brunch_rsvp';
 
-  const DEFAULT_SETTINGS = {
+  const DEFAULTS = {
     date:     'Saturday, May 17 · 11:00 AM',
     location: '12 Elm Street, Apt 4 — ring the bell',
     menu: [
@@ -348,60 +377,43 @@
       { name: 'Homemade cake', note: '' },
       { name: 'Mimosas & fresh juice', note: '' }
     ],
-    bring: '🌿 <strong>Just bring yourself!</strong> If you feel like it, a bottle of wine, flowers, or a small treat is always lovely — but it is <em>absolutely not obligatory</em>. Seriously.'
+    bring: '🌿 <strong>Just bring yourself!</strong> If you feel like it, a bottle of wine, flowers, or a small treat is always lovely — but it is <em>absolutely not obligatory</em>. Seriously.',
+    rsvps: []
   };
 
-  /* ---- JSONBin ---- */
-  async function fetchRsvps() {
+  /* ---- JSONBin: read/write the whole record ---- */
+  async function fetchBin() {
     try {
       const res = await fetch(`${BIN_URL}/latest`, {
         headers: { 'X-Master-Key': API_KEY }
       });
       const json = await res.json();
-      return json.record?.rsvps || [];
+      return Object.assign({}, DEFAULTS, json.record || {});
     } catch (e) {
-      console.error('fetchRsvps failed', e);
-      return [];
+      console.error('fetchBin failed', e);
+      return Object.assign({}, DEFAULTS);
     }
   }
 
-  async function putRsvps(rsvps) {
+  async function putBin(data) {
     try {
       const res = await fetch(BIN_URL, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY
-        },
-        body: JSON.stringify({ rsvps })
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+        body: JSON.stringify(data)
       });
       return res.ok;
     } catch (e) {
-      console.error('putRsvps failed', e);
+      console.error('putBin failed', e);
       return false;
     }
   }
 
-  /* ---- Settings (localStorage, host-only) ---- */
-  function loadSettings() {
-    try {
-      const raw = localStorage.getItem(SETTINGS_KEY);
-      return raw ? Object.assign({}, DEFAULT_SETTINGS, JSON.parse(raw)) : Object.assign({}, DEFAULT_SETTINGS);
-    } catch { return Object.assign({}, DEFAULT_SETTINGS); }
-  }
-
-  function saveSettings(s) {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
-  }
-
   /* ---- Render ---- */
   function renderSettings(s) {
-    document.getElementById('display-date').textContent          = s.date;
-    document.getElementById('hero-date-display').textContent     = s.date;
-    document.getElementById('display-location').href = 'https://maps.app.goo.gl/iUBwZLupPzzySSoBA';
+    document.getElementById('display-date').textContent     = s.date;
     document.getElementById('display-location').textContent = s.location;
-    document.getElementById('hero-location-display').textContent = s.location;
-    document.getElementById('display-bring').innerHTML           = s.bring;
+    document.getElementById('display-bring').innerHTML      = s.bring;
 
     const menuItems = Array.isArray(s.menu) ? s.menu
       : s.menu.split('\n').filter(l => l.trim()).map(l => {
@@ -429,17 +441,17 @@
   function renderGuestList(rsvps) {
     const list      = document.getElementById('guest-list');
     const countArea = document.getElementById('guest-count-area');
-    const attending = rsvps.filter(r => r.attending);
+    const attending = (rsvps || []).filter(r => r.attending);
 
     if (attending.length === 0) {
       list.innerHTML      = '<p class="guest-empty">No RSVPs yet — be the first!</p>';
       countArea.innerHTML = '';
-      const summary = document.getElementById('admin-guest-summary');
-      if (summary) summary.textContent = 'No confirmed guests yet.';
+      const s = document.getElementById('admin-guest-summary');
+      if (s) s.textContent = 'No confirmed guests yet.';
       return;
     }
 
-    const total = attending.reduce((s, r) => s + (r.headcount || 1), 0);
+    const total = attending.reduce((sum, r) => sum + (r.headcount || 1), 0);
     countArea.innerHTML = `
       <div class="guest-count-badge">
         <span>✓</span>
@@ -459,15 +471,15 @@
         </div>`;
     }).join('');
 
-    const summary = document.getElementById('admin-guest-summary');
-    if (summary) summary.textContent = `${attending.length} confirmed · ${total} people total.`;
+    const s = document.getElementById('admin-guest-summary');
+    if (s) s.textContent = `${attending.length} confirmed · ${total} people total.`;
   }
 
   /* ---- Init ---- */
   async function init() {
-    renderSettings(loadSettings());
-    const rsvps = await fetchRsvps();
-    renderGuestList(rsvps);
+    const data = await fetchBin();
+    renderSettings(data);
+    renderGuestList(data.rsvps);
 
     const stored = localStorage.getItem(MY_RSVP_KEY);
     if (stored) {
@@ -507,9 +519,10 @@
     btn.disabled    = true;
     btn.textContent = 'Saving…';
 
-    const current = await fetchRsvps();
-    current.push({ name, headcount, attending: true, ts: Date.now() });
-    const ok = await putRsvps(current);
+    const data = await fetchBin();
+    data.rsvps = data.rsvps || [];
+    data.rsvps.push({ name, headcount, attending: true, ts: Date.now() });
+    const ok = await putBin(data);
 
     if (ok) {
       localStorage.setItem(MY_RSVP_KEY, JSON.stringify({ attending: true, name }));
@@ -517,7 +530,7 @@
       document.getElementById('rsvp-existing').style.display = 'block';
       document.getElementById('rsvp-existing-msg').innerHTML =
         `<strong>You're confirmed!</strong> See you there, ${name} 🎉`;
-      renderGuestList(current);
+      renderGuestList(data.rsvps);
     } else {
       btn.disabled    = false;
       btn.textContent = 'Confirm RSVP →';
@@ -539,49 +552,68 @@
     btn.textContent = 'Confirm RSVP →';
   }
 
-  /* ---- Admin actions ---- */
-  function saveAdminSettings() {
-    const s        = loadSettings();
+  /* ---- Admin ---- */
+  async function saveAdminSettings() {
+    const statusEl = document.getElementById('admin-status');
+    statusEl.textContent = 'Saving…';
+
+    const data = await fetchBin();
     const dateVal  = document.getElementById('admin-date').value.trim();
     const locVal   = document.getElementById('admin-location').value.trim();
     const menuVal  = document.getElementById('admin-menu').value.trim();
     const bringVal = document.getElementById('admin-bring').value.trim();
-    if (dateVal)  s.date     = dateVal;
-    if (locVal)   s.location = locVal;
-    if (bringVal) s.bring    = bringVal;
+
+    if (dateVal)  data.date     = dateVal;
+    if (locVal)   data.location = locVal;
+    if (bringVal) data.bring    = bringVal;
     if (menuVal) {
-      s.menu = menuVal.split('\n').filter(l => l.trim()).map(l => {
+      data.menu = menuVal.split('\n').filter(l => l.trim()).map(l => {
         const [name, ...rest] = l.split('-');
         return { name: name.trim(), note: rest.join('-').trim() };
       });
     }
-    saveSettings(s);
-    renderSettings(s);
-    alert('Saved!');
+
+    const ok = await putBin(data);
+    if (ok) {
+      renderSettings(data);
+      statusEl.textContent = 'Saved! All visitors will see the updated content.';
+      setTimeout(() => { statusEl.textContent = ''; }, 4000);
+    } else {
+      statusEl.textContent = 'Save failed. Please try again.';
+      statusEl.style.color = 'var(--terracotta)';
+    }
   }
 
   async function resetGuestList() {
     if (!confirm('Reset the guest list? Use this after the brunch is over. Cannot be undone.')) return;
-    const ok = await putRsvps([]);
+    const statusEl = document.getElementById('admin-reset-status');
+    statusEl.textContent = 'Resetting…';
+
+    const data = await fetchBin();
+    data.rsvps = [];
+    const ok = await putBin(data);
+
     if (ok) {
       localStorage.removeItem(MY_RSVP_KEY);
       renderGuestList([]);
       clearMyRsvp();
-      alert('Guest list cleared. Ready for next month!');
+      statusEl.textContent = 'Guest list cleared. Ready for next month!';
+      setTimeout(() => { statusEl.textContent = ''; }, 4000);
     } else {
-      alert('Something went wrong. Please try again.');
+      statusEl.textContent = 'Something went wrong. Please try again.';
+      statusEl.style.color = 'var(--terracotta)';
     }
   }
 
   /* ---- Admin unlock sequence ----
-     Layer 1: ?host must be in URL          → enables click listening
-     Layer 2: click hero title 5× fast      → arms hotspot
-     Layer 3: click invisible hotspot       → reveals panel
-  ----------------------------------------------------------------- */
+     ?host in URL  → enables sequence
+     Title ×5 fast → arms hotspot
+     Hotspot click → reveals panel
+  ---------------------------------------- */
   const hostModeEnabled = new URLSearchParams(window.location.search).has('host');
-  let titleClicks   = 0;
-  let clickTimer    = null;
-  let hotspotArmed  = false;
+  let titleClicks  = 0;
+  let clickTimer   = null;
+  let hotspotArmed = false;
 
   document.getElementById('hero-title').addEventListener('click', () => {
     if (!hostModeEnabled) return;
@@ -589,8 +621,8 @@
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => { titleClicks = 0; }, 1000);
     if (titleClicks >= 5) {
-      titleClicks   = 0;
-      hotspotArmed  = true;
+      titleClicks  = 0;
+      hotspotArmed = true;
       clearTimeout(clickTimer);
     }
   });
