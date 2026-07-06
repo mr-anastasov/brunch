@@ -18,11 +18,14 @@
     --sage-light: #C8DEC9;
     --sage-pale: #EFF6EF;
     --mustard: #D4A017;
+    --gold-pale: #FDF6E3;
     --ink: #2C2417;
     --ink-mid: #5A4F3E;
     --ink-soft: #9B8F7E;
     --border: rgba(44,36,23,0.10);
-    --radius: 16px;
+    --shadow: 0 4px 24px rgba(44,36,23,0.07);
+    --shadow-hover: 0 8px 32px rgba(44,36,23,0.11);
+    --radius: 18px;
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
   }
@@ -38,9 +41,9 @@
 
   /* ---- HERO ---- */
   .hero {
-    background: var(--warm-white);
+    background: linear-gradient(165deg, var(--warm-white) 0%, var(--gold-pale) 45%, var(--terra-pale) 100%);
     border-bottom: 1px solid var(--border);
-    padding: 2.25rem 1.5rem 2rem;
+    padding: clamp(2.25rem, 6vw, 3.5rem) 1.5rem clamp(1.25rem, 3vw, 1.75rem);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -50,60 +53,112 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 60% 40% at 15% 20%, rgba(196,98,58,0.07) 0%, transparent 70%),
-      radial-gradient(ellipse 50% 40% at 85% 75%, rgba(122,158,126,0.09) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 50% at 50% 50%, rgba(212,160,23,0.05) 0%, transparent 70%);
+      radial-gradient(ellipse 55% 45% at 10% 15%, rgba(196,98,58,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 45% at 90% 80%, rgba(122,158,126,0.12) 0%, transparent 70%);
     pointer-events: none;
   }
+  .hero > * { position: relative; }
   .hero-eyebrow {
     font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--terracotta);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.75rem;
   }
   .hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    font-size: clamp(2.6rem, 7vw, 4rem);
     font-weight: 400;
     color: var(--ink);
-    line-height: 1.1;
-    white-space: nowrap;
+    line-height: 1.05;
     cursor: default;
     user-select: none;
   }
+  .hero-date {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--ink-mid);
+  }
+  .hero-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: clamp(1rem, 3vw, 2.25rem);
+    flex-wrap: wrap;
+    margin-top: 0.85rem;
+  }
+  .hero-weather {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-style: normal;
+  }
+  .hero-weather:empty { display: none; }
+  .hero-weather.loading {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .weather-temp {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 600;
+    color: var(--terracotta);
+    line-height: 1;
+  }
+  .weather-icon { font-size: 1.15rem; line-height: 1; }
   .hero-divider {
-    width: 40px; height: 2px;
+    height: 2px;
     background: linear-gradient(90deg, var(--terracotta), var(--mustard));
     border-radius: 2px;
-    margin: 1.1rem auto 0;
+  }
+  .hero-divider-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .calendar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .calendar-actions.hidden { display: none; }
+  .calendar-btn {
+    width: 100%;
+    padding: 10px 1rem;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .calendar-btn:hover {
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+    transform: translateY(-1px);
   }
 
   /* ---- LAYOUT ---- */
   .page-body {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1.75rem 1.5rem 3rem;
+    padding: 1.25rem 1.5rem 0.25rem;
   }
-
-  /* Desktop: 3 columns */
   .three-col {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1.25rem;
     align-items: start;
   }
-
-  /* Mobile: single column */
   @media (max-width: 860px) {
-    .three-col {
-      grid-template-columns: 1fr;
-    }
-    .page-body {
-      max-width: 560px;
-      padding: 1.5rem 1.25rem 3rem;
-    }
+    .three-col { grid-template-columns: 1fr; }
+    .page-body { max-width: 560px; padding: 1rem 1.25rem 0.25rem; }
   }
 
   .col { display: flex; flex-direction: column; gap: 1.25rem; }
@@ -113,10 +168,17 @@
     background: var(--warm-white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.25rem 1.25rem 1.5rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s ease;
   }
+  .card:hover { box-shadow: var(--shadow-hover); }
+  .card-full {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .card-body { padding: 1.15rem 1.25rem 1.25rem; min-width: 0; }
   .card-label {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -124,105 +186,468 @@
     margin-bottom: 0.9rem;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
   }
-  .card-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .card-label::before,
+  .card-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
 
-  /* ---- DETAILS ---- */
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .info-item { background: var(--cream); border-radius: 10px; padding: 0.85rem 1rem; }
-  .info-item-icon { font-size: 18px; margin-bottom: 0.3rem; display: block; }
-  .info-item-label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 0.2rem; }
-  .info-item-value { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4; }
-  .info-item-value.editable-date { color: var(--terracotta); font-family: var(--font-display); font-size: 15px; }
+  /* ---- LOCATION ---- */
+  .location-block {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  .location-block:hover { opacity: 0.88; }
+  .location-address {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.45;
+    margin-bottom: 0.75rem;
+  }
+  .map-wrap {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    line-height: 0;
+    pointer-events: none;
+  }
+  .map-wrap iframe {
+    width: 100%;
+    height: 150px;
+    border: 0;
+    display: block;
+  }
 
   /* ---- MENU ---- */
   #menu-list { display: flex; flex-direction: column; }
-  .menu-item { display: flex; align-items: baseline; gap: 9px; font-size: 14px; color: var(--ink-mid); padding: 0.35rem 0; border-bottom: 1px dashed var(--border); }
+  .menu-item {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    font-size: 14px;
+    color: var(--ink-mid);
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed rgba(44,36,23,0.07);
+    transition: color 0.12s ease;
+  }
   .menu-item:last-child { border-bottom: none; }
-  .menu-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--terracotta); flex-shrink: 0; margin-top: 7px; }
+  .menu-item:hover { color: var(--ink); }
+  .menu-leaf {
+    flex-shrink: 0;
+    font-size: 13px;
+    line-height: 1;
+    margin-top: 2px;
+    opacity: 0.85;
+  }
   .menu-item-name { flex: 1; }
-  .menu-item-note { font-size: 11px; color: var(--ink-soft); font-style: italic; }
+  .menu-item-note {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .menu-item-guest {
+    font-size: 11px;
+    color: var(--sage);
+    font-weight: 500;
+    white-space: nowrap;
+  }
 
   /* ---- BRING ---- */
-  .bring-note { background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 0.8rem 1rem; font-size: 13px; color: var(--ink-mid); line-height: 1.5; }
+  .bring-note {
+    background: var(--sage-pale);
+    border: 1px solid var(--sage-light);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+  }
   .bring-note strong { color: var(--sage); font-weight: 500; }
+  .bring-action { margin-top: 1rem; }
+  .bring-btn {
+    width: 100%;
+    padding: 10px 1rem;
+    border-radius: 100px;
+    border: 1.5px dashed var(--sage-light);
+    background: var(--sage-pale);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sage);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .bring-btn:hover {
+    background: var(--sage-light);
+    color: var(--ink);
+    transform: translateY(-1px);
+    border-style: solid;
+  }
+  .bring-form {
+    display: none;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-top: 0.75rem;
+    animation: fadeIn 0.2s ease;
+  }
+  .bring-form.visible { display: flex; }
+  .bring-input {
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .bring-input:focus { border-color: var(--sage); }
+  .bring-input::placeholder { color: var(--ink-soft); }
+  .bring-submit {
+    padding: 9px 1.1rem;
+    background: var(--sage);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+  .bring-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+  .bring-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .bring-done {
+    display: none;
+    margin-top: 0.75rem;
+    background: var(--sage-pale);
+    border: 1px solid var(--sage-light);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 13px;
+    color: var(--ink-mid);
+    animation: fadeIn 0.2s ease;
+  }
+  .bring-done.visible { display: block; }
+  .bring-done strong { color: var(--sage); }
 
   /* ---- RSVP ---- */
   .rsvp-question { text-align: center; margin-bottom: 1rem; }
-  .rsvp-question p { font-family: var(--font-display); font-size: 1.1rem; color: var(--ink); margin-bottom: 0.65rem; }
-  .rsvp-buttons { display: flex; gap: 10px; justify-content: center; margin-bottom: 0.9rem; flex-wrap: wrap; }
-  .rsvp-btn { padding: 9px 1.5rem; border-radius: 100px; border: 1.5px solid var(--border); font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s ease; background: transparent; color: var(--ink-mid); }
-  .rsvp-btn:hover { transform: translateY(-1px); }
+  .rsvp-question p {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .rsvp-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+    flex-wrap: wrap;
+  }
+  .rsvp-btn {
+    padding: 10px 1.5rem;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: transparent;
+    color: var(--ink-mid);
+  }
+  .rsvp-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(44,36,23,0.08); }
   .rsvp-btn.yes { border-color: var(--sage); color: var(--sage); }
-  .rsvp-btn.yes:hover, .rsvp-btn.yes.active { background: var(--sage); color: white; }
+  .rsvp-btn.yes:hover, .rsvp-btn.yes.active { background: var(--sage); color: white; box-shadow: 0 4px 16px rgba(122,158,126,0.35); }
   .rsvp-btn.no { border-color: var(--terracotta); color: var(--terracotta); }
-  .rsvp-btn.no:hover, .rsvp-btn.no.active { background: var(--terracotta); color: white; }
+  .rsvp-btn.no:hover, .rsvp-btn.no.active { background: var(--terracotta); color: white; box-shadow: 0 4px 16px rgba(196,98,58,0.3); }
 
   .rsvp-form { display: none; flex-direction: column; gap: 0.65rem; animation: fadeIn 0.2s ease; }
   .rsvp-form.visible { display: flex; }
   .rsvp-row { display: flex; gap: 8px; }
-  .rsvp-input { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-family: var(--font-body); font-size: 14px; background: var(--cream); color: var(--ink); outline: none; transition: border-color 0.15s; min-width: 0; }
+  .rsvp-input {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+    min-width: 0;
+  }
   .rsvp-input:focus { border-color: var(--sage); }
   .rsvp-input::placeholder { color: var(--ink-soft); }
   select.rsvp-input { cursor: pointer; }
-  .rsvp-submit { padding: 10px 1.25rem; background: var(--terracotta); color: white; border: none; border-radius: 100px; font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s, transform 0.1s; align-self: flex-end; }
+  .rsvp-submit {
+    padding: 10px 1.25rem;
+    background: var(--terracotta);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    align-self: flex-end;
+  }
   .rsvp-submit:hover { opacity: 0.88; transform: translateY(-1px); }
   .rsvp-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-  .rsvp-decline-msg { display: none; text-align: center; font-family: var(--font-display); font-style: italic; color: var(--ink-soft); font-size: 0.95rem; padding: 0.4rem 0; animation: fadeIn 0.2s ease; }
+  .rsvp-decline-msg {
+    display: none;
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    padding: 0.4rem 0;
+    animation: fadeIn 0.2s ease;
+  }
   .rsvp-decline-msg.visible { display: block; }
-  .rsvp-success { display: none; background: var(--sage-pale); border: 1px solid var(--sage-light); border-radius: 10px; padding: 0.9rem 1.1rem; text-align: center; animation: fadeIn 0.25s ease; }
+  .rsvp-success {
+    display: none;
+    background: var(--sage-pale);
+    border: 1px solid var(--sage-light);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    text-align: center;
+    animation: fadeIn 0.25s ease;
+  }
   .rsvp-success.visible { display: block; }
   .rsvp-success p { font-size: 14px; color: var(--ink-mid); }
   .rsvp-success strong { color: var(--sage); }
-  .rsvp-change { margin-top: 0.4rem; font-size: 12px; color: var(--ink-soft); text-decoration: underline; cursor: pointer; background: none; border: none; font-family: var(--font-body); }
+  .rsvp-change {
+    margin-top: 0.4rem;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+  }
 
   /* ---- GUEST LIST ---- */
-  .guest-list { display: flex; flex-direction: column; gap: 0.4rem; }
-  .guest-empty { text-align: center; font-style: italic; color: var(--ink-soft); font-size: 13px; padding: 0.5rem 0; }
-  .guest-item { display: flex; align-items: center; gap: 9px; padding: 0.5rem 0.65rem; background: var(--cream); border-radius: 8px; animation: fadeIn 0.2s ease; }
-  .guest-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--terra-pale); border: 1.5px solid var(--terra-light); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11px; color: var(--terracotta); flex-shrink: 0; text-transform: uppercase; }
-  .guest-info { flex: 1; }
+  .guest-list { display: flex; flex-direction: column; gap: 0.45rem; }
+  .guest-empty {
+    text-align: center;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 13px;
+    padding: 0.5rem 0;
+  }
+  .guest-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0.55rem 0.7rem;
+    background: var(--cream);
+    border-radius: 10px;
+    animation: fadeIn 0.2s ease;
+    transition: transform 0.12s ease;
+  }
+  .guest-item:hover { transform: translateX(2px); }
+  .guest-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--terra-pale);
+    border: 1.5px solid var(--terra-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--terracotta);
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+  .guest-info { flex: 1; min-width: 0; }
   .guest-name { font-size: 13px; font-weight: 500; color: var(--ink); }
   .guest-plus { font-size: 11px; color: var(--ink-soft); }
-  .guest-count-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--terra-pale); border: 1px solid var(--terra-light); color: var(--terracotta); font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 100px; margin-bottom: 0.65rem; }
+  .guest-bringing {
+    font-size: 11px;
+    color: var(--sage);
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .guest-count-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--terra-pale);
+    border: 1px solid var(--terra-light);
+    color: var(--terracotta);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 0.65rem;
+  }
+  .loading-indicator {
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 0.75rem 0;
+  }
 
-  .loading-indicator { text-align: center; font-size: 13px; color: var(--ink-soft); padding: 0.75rem 0; }
-
-  /* ---- ADMIN PANEL ---- */
+  /* ---- ADMIN ---- */
   #admin-panel {
     display: none;
     background: var(--warm-white);
     border: 1px dashed rgba(196,98,58,0.3);
     border-radius: var(--radius);
     padding: 1.5rem;
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
+    box-shadow: var(--shadow);
     animation: fadeIn 0.25s ease;
   }
   #admin-panel.visible { display: block; }
-  #admin-panel h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; color: var(--ink); margin-bottom: 1rem; }
+  #admin-panel h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
   .admin-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 0.75rem; }
-  .admin-field label { font-size: 11px; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; }
-  .admin-field input, .admin-field textarea { padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: var(--font-body); font-size: 14px; background: var(--cream); color: var(--ink); outline: none; }
+  .admin-field label {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .admin-field input, .admin-field textarea {
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+  }
   .admin-field input:focus, .admin-field textarea:focus { border-color: var(--terracotta); }
   .admin-field textarea { min-height: 80px; resize: vertical; }
+  .admin-check { display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem; }
+  .admin-check input { width: 16px; height: 16px; accent-color: var(--terracotta); }
+  .admin-check label { font-size: 13px; color: var(--ink-mid); text-transform: none; letter-spacing: 0; }
   .admin-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 0.75rem; }
-  .admin-btn { padding: 8px 1.1rem; border-radius: 8px; border: 1.5px solid var(--border); font-family: var(--font-body); font-size: 13px; cursor: pointer; background: transparent; color: var(--ink-mid); transition: background 0.12s; }
+  .admin-btn {
+    padding: 8px 1.1rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--ink-mid);
+    transition: background 0.12s;
+  }
   .admin-btn:hover { background: var(--cream); }
   .admin-btn.primary { background: var(--terracotta); color: white; border-color: var(--terracotta); }
   .admin-btn.primary:hover { opacity: 0.88; }
   .admin-btn.danger { color: #b53a2f; border-color: rgba(181,58,47,0.3); }
   .admin-btn.danger:hover { background: #fdf0ef; }
-  .admin-section-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-soft); margin: 1.25rem 0 0.75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .admin-section-title {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    margin: 1.25rem 0 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
   .admin-status { font-size: 12px; color: var(--sage); margin-top: 0.5rem; min-height: 18px; }
 
-  /* Invisible hotspot */
-  #hotspot { position: fixed; bottom: 0; right: 0; width: 28px; height: 28px; cursor: default; z-index: 9999; background: transparent; }
+  /* ---- VERSION TIMELINE ---- */
+  .version-timeline {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 1rem 0.15rem;
+  }
+  .version-track {
+    display: flex;
+    align-items: center;
+  }
+  .version-line {
+    width: 56px;
+    height: 1px;
+    background: var(--ink-soft);
+    opacity: 0.35;
+    flex-shrink: 0;
+  }
+  .version-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--ink-soft);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    display: block;
+    flex-shrink: 0;
+  }
+  .version-dot:hover { border-color: var(--terracotta); transform: scale(1.15); }
+  .version-dot.active {
+    background: var(--terracotta);
+    border-color: var(--terracotta);
+    transform: scale(1.2);
+  }
 
-  footer { text-align: center; padding: 1rem; font-size: 12px; color: var(--ink-soft); }
+  #hotspot {
+    position: fixed;
+    bottom: 0; right: 0;
+    width: 28px; height: 28px;
+    cursor: default;
+    z-index: 9999;
+    background: transparent;
+  }
 
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  footer {
+    text-align: center;
+    padding: 0.5rem 1rem 1.5rem;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .footer-countdown {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    font-style: italic;
+    color: var(--ink-mid);
+    padding: 0.25rem 1rem 0.75rem;
+    line-height: 1.4;
+  }
+  .footer-countdown:empty { display: none; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
@@ -230,118 +655,154 @@
 <header class="hero">
   <p class="hero-eyebrow">You're invited</p>
   <h1 id="hero-title">Saturday Brunch</h1>
-  <div class="hero-divider"></div>
+  <div class="hero-meta">
+    <p class="hero-date" id="hero-date">—</p>
+    <span class="hero-weather" id="hero-weather"></span>
+  </div>
+  <div class="hero-divider-wrap">
+    <div class="hero-divider" id="hero-divider"></div>
+  </div>
 </header>
 
 <div class="page-body">
   <div class="three-col">
 
-    <!-- Column 1: Details + RSVP -->
     <div class="col">
       <div class="card">
-        <p class="card-label">Details</p>
-        <div class="info-grid">
-          <div class="info-item">
-            <span class="info-item-icon">🗓</span>
-            <p class="info-item-label">When</p>
-            <p class="info-item-value editable-date" id="display-date">—</p>
-          </div>
-          <div class="info-item">
-            <span class="info-item-icon">📍</span>
-            <p class="info-item-label">Where</p>
-            <a class="info-item-value" id="display-location"
-               href="https://maps.app.goo.gl/iUBwZLupPzzySSoBA"
-               target="_blank" rel="noopener"
-               style="color:inherit;text-decoration:underline;text-decoration-color:var(--terra-light);cursor:pointer;display:block;">—</a>
-          </div>
+        <div class="card-body">
+          <p class="card-label">Location</p>
+          <a class="location-block" id="location-block"
+             href="https://maps.app.goo.gl/iUBwZLupPzzySSoBA"
+             target="_blank" rel="noopener">
+            <p class="location-address" id="display-location">—</p>
+            <div class="map-wrap">
+              <iframe id="map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Location map"></iframe>
+            </div>
+          </a>
         </div>
       </div>
 
       <div class="card">
-        <p class="card-label">RSVP</p>
-        <div id="rsvp-existing" style="display:none;">
-          <div class="rsvp-success visible">
-            <p id="rsvp-existing-msg"></p>
-            <button class="rsvp-change" onclick="clearMyRsvp()">Change my response</button>
+        <div class="card-body">
+          <p class="card-label">RSVP</p>
+          <div id="rsvp-existing" style="display:none;">
+            <div class="rsvp-success visible">
+              <p id="rsvp-existing-msg"></p>
+              <button class="rsvp-change" onclick="clearMyRsvp()">Change my response</button>
+            </div>
+          </div>
+          <div id="rsvp-new">
+            <div class="rsvp-question">
+              <p>Will you be joining us?</p>
+              <div class="rsvp-buttons">
+                <button class="rsvp-btn yes" onclick="selectRsvp('yes')">Yes, I'll be there ✓</button>
+                <button class="rsvp-btn no" onclick="selectRsvp('no')">Can't make it</button>
+              </div>
+            </div>
+            <div class="rsvp-decline-msg" id="decline-msg">
+              <p>No worries — hope to see you next month! 🌿</p>
+            </div>
+            <form class="rsvp-form" id="rsvp-form" onsubmit="submitRsvp(event)">
+              <div class="rsvp-row">
+                <input type="text" class="rsvp-input" id="rsvp-name" placeholder="Your name" required autocomplete="given-name">
+                <select class="rsvp-input" id="rsvp-headcount" style="max-width:110px;">
+                  <option value="1">Just me</option>
+                  <option value="2">Me + 1</option>
+                  <option value="3">Me + 2</option>
+                  <option value="4">Me + 3</option>
+                </select>
+              </div>
+              <button type="submit" class="rsvp-submit" id="rsvp-submit-btn">Confirm RSVP →</button>
+            </form>
           </div>
         </div>
-        <div id="rsvp-new">
-          <div class="rsvp-question">
-            <p>Will you be joining us?</p>
-            <div class="rsvp-buttons">
-              <button class="rsvp-btn yes" onclick="selectRsvp('yes')">Yes, I'll be there ✓</button>
-              <button class="rsvp-btn no" onclick="selectRsvp('no')">Can't make it</button>
-            </div>
+      </div>
+
+      <div class="card" id="calendar-card">
+        <div class="card-body">
+          <p class="card-label">Calendar</p>
+          <div class="calendar-actions" id="calendar-actions">
+            <button type="button" class="calendar-btn" onclick="openGoogleCalendar()">Add to Google Calendar</button>
+            <button type="button" class="calendar-btn" onclick="downloadIcs()">Apple / Outlook (.ics)</button>
           </div>
-          <div class="rsvp-decline-msg" id="decline-msg">
-            <p>No worries — hope to see you next month! 🌿</p>
-          </div>
-          <form class="rsvp-form" id="rsvp-form" onsubmit="submitRsvp(event)">
-            <div class="rsvp-row">
-              <input type="text" class="rsvp-input" id="rsvp-name" placeholder="Your name" required autocomplete="given-name">
-              <select class="rsvp-input" id="rsvp-headcount" style="max-width:110px;">
-                <option value="1">Just me</option>
-                <option value="2">Me + 1</option>
-                <option value="3">Me + 2</option>
-                <option value="4">Me + 3</option>
-              </select>
-            </div>
-            <button type="submit" class="rsvp-submit" id="rsvp-submit-btn">Confirm RSVP →</button>
-          </form>
         </div>
       </div>
     </div>
 
-    <!-- Column 2: Menu + What to bring -->
     <div class="col">
       <div class="card">
-        <p class="card-label">Menu</p>
-        <div id="menu-list"><p class="loading-indicator">Loading…</p></div>
-      </div>
-
-      <div class="card">
-        <p class="card-label">What to bring</p>
-        <div class="bring-note" id="display-bring"></div>
+        <div class="card-body">
+          <p class="card-label">Menu</p>
+          <div id="menu-list"><p class="loading-indicator">Loading…</p></div>
+          <div class="bring-action" id="bring-action" style="display:none;">
+            <button type="button" class="bring-btn" id="bring-toggle-btn" onclick="toggleBringForm()">I want to bring…</button>
+            <form class="bring-form" id="bring-form" onsubmit="submitBring(event)">
+              <input type="text" class="bring-input" id="bring-name" placeholder="Your name" style="display:none;">
+              <input type="text" class="bring-input" id="bring-item" placeholder="Let us know what you are bringing" required>
+              <button type="submit" class="bring-submit" id="bring-submit-btn">Add to menu →</button>
+            </form>
+            <div class="bring-done" id="bring-done"></div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Column 3: Guest list -->
     <div class="col">
       <div class="card">
-        <p class="card-label">Who's coming</p>
-        <div id="guest-count-area"></div>
-        <div class="guest-list" id="guest-list">
-          <p class="loading-indicator">Loading…</p>
+        <div class="card-body">
+          <p class="card-label">Guests</p>
+          <div id="guest-count-area"></div>
+          <div class="guest-list" id="guest-list">
+            <p class="loading-indicator">Loading…</p>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Admin panel — hidden, full width below columns -->
+  <div class="card card-full">
+    <div class="card-body">
+      <p class="card-label">Bring</p>
+      <div class="bring-note" id="display-bring"></div>
+    </div>
+  </div>
+
   <div id="admin-panel">
     <h3>Host settings</h3>
 
     <p class="admin-section-title">Page content</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
       <div class="admin-field">
-        <label>Date & time</label>
+        <label>Date & time (display)</label>
         <input type="text" id="admin-date" placeholder="Saturday, May 17 · 11:00 AM">
+      </div>
+      <div class="admin-field">
+        <label>Event date & time (for weather & countdown)</label>
+        <input type="datetime-local" id="admin-event-at">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+      <div class="admin-field">
+        <label>City (for weather forecast)</label>
+        <input type="text" id="admin-city" placeholder="Sofia">
       </div>
       <div class="admin-field">
         <label>Location display text</label>
         <input type="text" id="admin-location" placeholder="12 Elm Street, Apt 4">
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-      <div class="admin-field">
-        <label>Menu — one item per line, note after dash</label>
-        <textarea id="admin-menu" placeholder="Eggs Benedict&#10;Avocado toast - vegan option&#10;Mimosas"></textarea>
-      </div>
-      <div class="admin-field">
-        <label>What to bring note</label>
-        <textarea id="admin-bring"></textarea>
-      </div>
+    <div class="admin-field">
+      <label>What to bring note</label>
+      <textarea id="admin-bring"></textarea>
+    </div>
+    <div class="admin-field">
+      <label>Menu — one item per line, note after dash</label>
+      <textarea id="admin-menu" placeholder="Eggs Benedict&#10;Avocado toast - vegan option&#10;Mimosas"></textarea>
+    </div>
+    <div class="admin-check">
+      <input type="checkbox" id="admin-allow-bringing" checked>
+      <label for="admin-allow-bringing">Allow guests to add items to the menu</label>
     </div>
     <div class="admin-actions">
       <button class="admin-btn primary" onclick="saveAdminSettings()">Save & publish</button>
@@ -357,17 +818,30 @@
   </div>
 </div>
 
+<nav class="version-timeline" aria-label="Development versions">
+  <div class="version-track">
+    <a href="index.html" class="version-dot" title="Version 1"></a>
+    <span class="version-line" aria-hidden="true"></span>
+    <a href="v2.html" class="version-dot active" title="Version 2"></a>
+  </div>
+</nav>
+
+<p class="footer-countdown" id="footer-countdown"></p>
+
 <div id="hotspot"></div>
-<footer><p>See you Saturday ☀️</p></footer>
 
 <script>
   const BIN_ID  = '69dcb2a8856a6821892a9eb4';
   const API_KEY = '$2a$10$NMkk/khZu4tVrBQZw2rYtedlIuaKEs8AU1h6ZdIInu2YEXYzaOYey';
   const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
   const MY_RSVP_KEY = 'my_brunch_rsvp';
+  const MY_BRING_KEY = 'my_brunch_bring';
+  const MAP_LINK = 'https://maps.app.goo.gl/iUBwZLupPzzySSoBA';
 
   const DEFAULTS = {
-    date:     'Saturday, May 17 · 11:00 AM',
+    date: 'Saturday, May 17 · 11:00 AM',
+    eventAt: '2026-05-17T11:00:00',
+    city: '',
     location: '12 Elm Street, Apt 4 — ring the bell',
     menu: [
       { name: 'Eggs Benedict', note: '' },
@@ -378,10 +852,31 @@
       { name: 'Mimosas & fresh juice', note: '' }
     ],
     bring: '🌿 <strong>Just bring yourself!</strong> If you feel like it, a bottle of wine, flowers, or a small treat is always lovely — but it is <em>absolutely not obligatory</em>. Seriously.',
+    allowGuestBringing: true,
+    guestBringing: [],
     rsvps: []
   };
 
-  /* ---- JSONBin: read/write the whole record ---- */
+  let cachedData = null;
+  let countdownTimer = null;
+
+  function menuIcon(name) {
+    const n = (name || '').toLowerCase();
+    if (/mimosa|juice|wine|coffee|tea|drink|prosecco|champagne|cocktail|beer|sangria/.test(n)) return '🥂';
+    if (/salad|fruit|vegetable|greens|tomato|cucumber/.test(n)) return '🥗';
+    if (/cake|dessert|cookie|sweet|tart|pie|brownie|muffin|pastry/.test(n)) return '🍰';
+    if (/egg|toast|pancake|waffle|benedict|bacon|croissant|bagel|brunch|ham|sausage/.test(n)) return '🥐';
+    return '🌿';
+  }
+
+  function normalizeMenu(menu) {
+    if (Array.isArray(menu)) return menu;
+    return String(menu || '').split('\n').filter(l => l.trim()).map(l => {
+      const [name, ...rest] = l.split('-');
+      return { name: name.trim(), note: rest.join('-').trim() };
+    });
+  }
+
   async function fetchBin() {
     try {
       const res = await fetch(`${BIN_URL}/latest`, {
@@ -409,42 +904,310 @@
     }
   }
 
-  /* ---- Render ---- */
-  function renderSettings(s) {
-    document.getElementById('display-date').textContent     = s.date;
-    document.getElementById('display-location').textContent = s.location;
-    document.getElementById('display-bring').innerHTML      = s.bring;
-
-    const menuItems = Array.isArray(s.menu) ? s.menu
-      : s.menu.split('\n').filter(l => l.trim()).map(l => {
-          const [name, ...rest] = l.split('-');
-          return { name: name.trim(), note: rest.join('-').trim() };
-        });
-
-    document.getElementById('menu-list').innerHTML = menuItems.map(item => `
+  function renderMenuItem(item, isGuest) {
+    const icon = menuIcon(item.name);
+    const guestLabel = isGuest
+      ? `<span class="menu-item-guest">— ${item.guestName || item.note || ''}</span>`
+      : (item.note ? `<span class="menu-item-note">${item.note}</span>` : '');
+    return `
       <div class="menu-item">
-        <span class="menu-dot"></span>
+        <span class="menu-leaf">${icon}</span>
         <span class="menu-item-name">${item.name}</span>
-        ${item.note ? `<span class="menu-item-note">${item.note}</span>` : ''}
-      </div>`).join('');
-
-    const adminDate  = document.getElementById('admin-date');
-    const adminLoc   = document.getElementById('admin-location');
-    const adminMenu  = document.getElementById('admin-menu');
-    const adminBring = document.getElementById('admin-bring');
-    if (adminDate)  adminDate.value  = s.date;
-    if (adminLoc)   adminLoc.value   = s.location;
-    if (adminBring) adminBring.value = s.bring.replace(/<[^>]+>/g, '');
-    if (adminMenu)  adminMenu.value  = menuItems.map(i => i.note ? `${i.name} - ${i.note}` : i.name).join('\n');
+        ${guestLabel}
+      </div>`;
   }
 
-  function renderGuestList(rsvps) {
-    const list      = document.getElementById('guest-list');
+  function renderMenu(data) {
+    const hostItems = normalizeMenu(data.menu);
+    const guestItems = (data.guestBringing || []).map(g => ({
+      name: g.item,
+      guestName: g.name,
+      note: g.name
+    }));
+
+    let html = hostItems.map(i => renderMenuItem(i, false)).join('');
+    if (guestItems.length) {
+      html += guestItems.map(i => renderMenuItem(i, true)).join('');
+    }
+    if (!hostItems.length && !guestItems.length) {
+      html = '<p class="guest-empty">Nothing on the menu yet.</p>';
+    }
+    document.getElementById('menu-list').innerHTML = html;
+  }
+
+  function updateMap(location) {
+    const q = encodeURIComponent(location || '12 Elm Street');
+    document.getElementById('map-iframe').src =
+      `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
+  }
+
+  function getMapsUrl(location) {
+    if (MAP_LINK) return MAP_LINK;
+    return `https://maps.google.com/maps?q=${encodeURIComponent(location || '')}`;
+  }
+
+  function getEventTimes(eventAt) {
+    const start = new Date(eventAt);
+    const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
+    return { start, end };
+  }
+
+  function toCalStamp(d) {
+    const p = n => String(n).padStart(2, '0');
+    return (
+      d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + 'T' +
+      p(d.getUTCHours()) + p(d.getUTCMinutes()) + p(d.getUTCSeconds()) + 'Z'
+    );
+  }
+
+  function getCalendarData() {
+    return cachedData?.eventAt ? cachedData : null;
+  }
+
+  function openGoogleCalendar() {
+    const data = getCalendarData();
+    if (!data) return;
+    const { start, end } = getEventTimes(data.eventAt);
+    const url =
+      'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent('Saturday Brunch') +
+      '&dates=' + toCalStamp(start) + '/' + toCalStamp(end) +
+      '&location=' + encodeURIComponent(data.location || '') +
+      '&details=' + encodeURIComponent("You're invited to Saturday Brunch!");
+    window.open(url, '_blank', 'noopener');
+  }
+
+  function downloadIcs() {
+    const data = getCalendarData();
+    if (!data) return;
+    const ics = buildIcs(data);
+    if (!ics) return;
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'saturday-brunch.ics';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+  function escapeIcs(text) {
+    return String(text || '')
+      .replace(/\\/g, '\\\\')
+      .replace(/;/g, '\\;')
+      .replace(/,/g, '\\,')
+      .replace(/\n/g, '\\n');
+  }
+
+  function buildIcs(data) {
+    if (!data.eventAt) return null;
+    const { start, end } = getEventTimes(data.eventAt);
+    const uid = `brunch-${toCalStamp(start)}@brunch-invite`;
+    return [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Saturday Brunch//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${toCalStamp(new Date())}`,
+      `DTSTART:${toCalStamp(start)}`,
+      `DTEND:${toCalStamp(end)}`,
+      'SUMMARY:Saturday Brunch',
+      `LOCATION:${escapeIcs(data.location)}`,
+      `DESCRIPTION:${escapeIcs("You're invited to Saturday Brunch!")}`,
+      'BEGIN:VALARM',
+      'TRIGGER:-PT24H',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Saturday Brunch is tomorrow!',
+      'END:VALARM',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT24H',
+      'ACTION:EMAIL',
+      'DESCRIPTION:Saturday Brunch is tomorrow!',
+      'SUMMARY:Saturday Brunch reminder',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+  }
+
+  const WEATHER_LABELS = {
+    0: 'Clear skies', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+    45: 'Foggy', 48: 'Foggy', 51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+    61: 'Light rain', 63: 'Rain', 65: 'Heavy rain', 71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
+    80: 'Showers', 81: 'Showers', 82: 'Heavy showers', 95: 'Thunderstorms', 96: 'Thunderstorms', 99: 'Thunderstorms'
+  };
+
+  function weatherEmoji(code) {
+    if (code === 0) return '☀️';
+    if (code <= 3) return '⛅';
+    if (code <= 48) return '🌫';
+    if (code <= 57) return '🌦';
+    if (code <= 67) return '🌧';
+    if (code <= 77) return '❄️';
+    if (code <= 82) return '🌦';
+    if (code >= 95) return '⛈';
+    return '🌤';
+  }
+
+  function geocodeQuery(city, location) {
+    if (city && city.trim()) return city.trim();
+    return (location || '').split(/[—,·]/)[0].trim();
+  }
+
+  function countdownPart(n, word) {
+    return `${n} ${word}${n === 1 ? '' : 's'}`;
+  }
+
+  function updateCountdown(eventAt) {
+    const el = document.getElementById('footer-countdown');
+    if (!eventAt) { el.textContent = ''; return; }
+
+    function tick() {
+      const diff = new Date(eventAt) - Date.now();
+      if (diff <= 0) {
+        el.textContent = "It's brunch time — see you there! ☀️";
+        clearInterval(countdownTimer);
+        return;
+      }
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+      el.textContent =
+        `${countdownPart(days, 'day')}, ${countdownPart(hours, 'hour')}, ` +
+        `${countdownPart(mins, 'minute')} and ${countdownPart(secs, 'second')}`;
+    }
+
+    tick();
+    clearInterval(countdownTimer);
+    countdownTimer = setInterval(tick, 1000);
+  }
+
+  async function updateWeather(city, location, eventAt) {
+    const el = document.getElementById('hero-weather');
+    const query = geocodeQuery(city, location);
+    if (!eventAt || !query) { el.innerHTML = ''; return; }
+
+    const eventDate = new Date(eventAt);
+    const dateStr = eventDate.toISOString().slice(0, 10);
+    const daysUntil = (eventDate - Date.now()) / 86400000;
+
+    if (daysUntil > 16 || daysUntil < -1) {
+      el.innerHTML = '';
+      return;
+    }
+
+    el.textContent = '…';
+    el.classList.add('loading');
+
+    try {
+      const geoRes = await fetch(
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1`
+      );
+      const geo = await geoRes.json();
+      if (!geo.results?.length) {
+        el.innerHTML = '';
+        el.classList.remove('loading');
+        return;
+      }
+
+      const { latitude, longitude } = geo.results[0];
+      const wxRes = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}` +
+        `&hourly=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code` +
+        `&timezone=auto&start_date=${dateStr}&end_date=${dateStr}`
+      );
+      const wx = await wxRes.json();
+
+      let code = wx.daily?.weather_code?.[0];
+      let hi = wx.daily?.temperature_2m_max?.[0];
+      let lo = wx.daily?.temperature_2m_min?.[0];
+      let eventTemp = null;
+
+      if (wx.hourly?.time?.length) {
+        const targetHour = eventDate.getHours();
+        const idx = wx.hourly.time.findIndex(t => new Date(t).getHours() === targetHour);
+        if (idx >= 0) {
+          eventTemp = wx.hourly.temperature_2m[idx];
+          code = wx.hourly.weather_code[idx] ?? code;
+        }
+      }
+
+      el.classList.remove('loading');
+
+      if (hi == null && eventTemp == null) {
+        el.innerHTML = '';
+        return;
+      }
+
+      const tempStr = eventTemp != null
+        ? `${Math.round(eventTemp)}°C`
+        : lo != null && Math.round(lo) !== Math.round(hi)
+          ? `${Math.round(lo)}–${Math.round(hi)}°C`
+          : `${Math.round(hi)}°C`;
+
+      el.innerHTML =
+        `<span class="weather-temp">${tempStr}</span>` +
+        `<span class="weather-icon">${weatherEmoji(code)}</span>`;
+    } catch (e) {
+      console.error('weather fetch failed', e);
+      el.innerHTML = '';
+      el.classList.remove('loading');
+    }
+  }
+
+  function renderSettings(s) {
+    document.getElementById('hero-date').textContent = s.date;
+    document.getElementById('display-location').textContent = s.location;
+    document.getElementById('location-block').href = getMapsUrl(s.location);
+    document.getElementById('display-bring').innerHTML = s.bring;
+
+    updateMap(s.location);
+    updateWeather(s.city, s.location, s.eventAt);
+    updateCountdown(s.eventAt);
+    renderMenu(s);
+
+    const allow = s.allowGuestBringing !== false;
+    document.getElementById('bring-action').style.display = allow ? 'block' : 'none';
+
+    const adminDate = document.getElementById('admin-date');
+    const adminCity = document.getElementById('admin-city');
+    const adminLoc = document.getElementById('admin-location');
+    const adminMenu = document.getElementById('admin-menu');
+    const adminBring = document.getElementById('admin-bring');
+    const adminEventAt = document.getElementById('admin-event-at');
+    const adminAllow = document.getElementById('admin-allow-bringing');
+    const menuItems = normalizeMenu(s.menu);
+
+    if (adminDate) adminDate.value = s.date;
+    if (adminCity) adminCity.value = s.city || '';
+    if (adminLoc) adminLoc.value = s.location;
+    if (adminBring) adminBring.value = s.bring.replace(/<[^>]+>/g, '');
+    if (adminMenu) adminMenu.value = menuItems.map(i => i.note ? `${i.name} - ${i.note}` : i.name).join('\n');
+    if (adminEventAt && s.eventAt) {
+      adminEventAt.value = s.eventAt.slice(0, 16);
+    }
+    if (adminAllow) adminAllow.checked = allow;
+  }
+
+  function getGuestBringingMap(guestBringing) {
+    const map = {};
+    (guestBringing || []).forEach(g => { map[g.name.toLowerCase()] = g.item; });
+    return map;
+  }
+
+  function renderGuestList(rsvps, guestBringing) {
+    const list = document.getElementById('guest-list');
     const countArea = document.getElementById('guest-count-area');
     const attending = (rsvps || []).filter(r => r.attending);
+    const bringMap = getGuestBringingMap(guestBringing);
 
     if (attending.length === 0) {
-      list.innerHTML      = '<p class="guest-empty">No RSVPs yet — be the first!</p>';
+      list.innerHTML = '<p class="guest-empty">No RSVPs yet — be the first!</p>';
       countArea.innerHTML = '';
       const s = document.getElementById('admin-guest-summary');
       if (s) s.textContent = 'No confirmed guests yet.';
@@ -461,12 +1224,14 @@
     list.innerHTML = attending.map(r => {
       const initials = r.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
       const plus = r.headcount > 1 ? `+${r.headcount - 1} guest${r.headcount > 2 ? 's' : ''}` : '';
+      const bringing = bringMap[r.name.toLowerCase()];
       return `
         <div class="guest-item">
           <div class="guest-avatar">${initials}</div>
           <div class="guest-info">
             <p class="guest-name">${r.name}</p>
             ${plus ? `<p class="guest-plus">${plus}</p>` : ''}
+            ${bringing ? `<p class="guest-bringing">bringing ${bringing}</p>` : ''}
           </div>
         </div>`;
     }).join('');
@@ -475,16 +1240,46 @@
     if (s) s.textContent = `${attending.length} confirmed · ${total} people total.`;
   }
 
-  /* ---- Init ---- */
+  function syncBringUI(data) {
+    const stored = localStorage.getItem(MY_BRING_KEY);
+    const bringDone = document.getElementById('bring-done');
+    const bringToggle = document.getElementById('bring-toggle-btn');
+    const bringForm = document.getElementById('bring-form');
+
+    if (stored) {
+      const b = JSON.parse(stored);
+      bringToggle.style.display = 'none';
+      bringForm.classList.remove('visible');
+      bringDone.classList.add('visible');
+      bringDone.innerHTML = `You're bringing <strong>${b.item}</strong> — thank you! 🌿`;
+    } else {
+      bringToggle.style.display = 'block';
+      bringDone.classList.remove('visible');
+    }
+
+    const rsvpStored = localStorage.getItem(MY_RSVP_KEY);
+    const nameInput = document.getElementById('bring-name');
+    if (rsvpStored) {
+      const r = JSON.parse(rsvpStored);
+      if (r.name && r.name !== 'Guest') {
+        nameInput.style.display = 'none';
+        nameInput.value = r.name;
+        return;
+      }
+    }
+    nameInput.style.display = 'block';
+  }
+
   async function init() {
-    const data = await fetchBin();
-    renderSettings(data);
-    renderGuestList(data.rsvps);
+    cachedData = await fetchBin();
+    renderSettings(cachedData);
+    renderGuestList(cachedData.rsvps, cachedData.guestBringing);
+    syncBringUI(cachedData);
 
     const stored = localStorage.getItem(MY_RSVP_KEY);
     if (stored) {
       const r = JSON.parse(stored);
-      document.getElementById('rsvp-new').style.display      = 'none';
+      document.getElementById('rsvp-new').style.display = 'none';
       document.getElementById('rsvp-existing').style.display = 'block';
       document.getElementById('rsvp-existing-msg').innerHTML = r.attending
         ? `<strong>You're confirmed!</strong> See you there, ${r.name} 🎉`
@@ -492,7 +1287,6 @@
     }
   }
 
-  /* ---- RSVP ---- */
   let selectedAttending = null;
 
   function selectRsvp(choice) {
@@ -511,12 +1305,12 @@
 
   async function submitRsvp(e) {
     e.preventDefault();
-    const name      = document.getElementById('rsvp-name').value.trim();
+    const name = document.getElementById('rsvp-name').value.trim();
     const headcount = parseInt(document.getElementById('rsvp-headcount').value);
     if (!name) return;
 
     const btn = document.getElementById('rsvp-submit-btn');
-    btn.disabled    = true;
+    btn.disabled = true;
     btn.textContent = 'Saving…';
 
     const data = await fetchBin();
@@ -525,14 +1319,16 @@
     const ok = await putBin(data);
 
     if (ok) {
+      cachedData = data;
       localStorage.setItem(MY_RSVP_KEY, JSON.stringify({ attending: true, name }));
-      document.getElementById('rsvp-new').style.display      = 'none';
+      document.getElementById('rsvp-new').style.display = 'none';
       document.getElementById('rsvp-existing').style.display = 'block';
       document.getElementById('rsvp-existing-msg').innerHTML =
         `<strong>You're confirmed!</strong> See you there, ${name} 🎉`;
-      renderGuestList(data.rsvps);
+      renderGuestList(data.rsvps, data.guestBringing);
+      syncBringUI(data);
     } else {
-      btn.disabled    = false;
+      btn.disabled = false;
       btn.textContent = 'Confirm RSVP →';
       alert('Something went wrong. Please try again.');
     }
@@ -542,30 +1338,77 @@
     localStorage.removeItem(MY_RSVP_KEY);
     selectedAttending = null;
     document.getElementById('rsvp-existing').style.display = 'none';
-    document.getElementById('rsvp-new').style.display      = 'block';
+    document.getElementById('rsvp-new').style.display = 'block';
     document.querySelectorAll('.rsvp-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('rsvp-form').classList.remove('visible');
     document.getElementById('decline-msg').classList.remove('visible');
     document.getElementById('rsvp-name').value = '';
     const btn = document.getElementById('rsvp-submit-btn');
-    btn.disabled    = false;
+    btn.disabled = false;
     btn.textContent = 'Confirm RSVP →';
+    syncBringUI(cachedData);
   }
 
-  /* ---- Admin ---- */
+  function toggleBringForm() {
+    document.getElementById('bring-form').classList.toggle('visible');
+    document.getElementById('bring-toggle-btn').style.display =
+      document.getElementById('bring-form').classList.contains('visible') ? 'none' : 'block';
+  }
+
+  async function submitBring(e) {
+    e.preventDefault();
+    const item = document.getElementById('bring-item').value.trim();
+    let name = document.getElementById('bring-name').value.trim();
+
+    const rsvpStored = localStorage.getItem(MY_RSVP_KEY);
+    if (rsvpStored) {
+      const r = JSON.parse(rsvpStored);
+      if (r.name && r.name !== 'Guest') name = r.name;
+    }
+    if (!name || !item) return;
+
+    const btn = document.getElementById('bring-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Adding…';
+
+    const data = await fetchBin();
+    data.guestBringing = data.guestBringing || [];
+    data.guestBringing.push({ name, item, ts: Date.now() });
+    const ok = await putBin(data);
+
+    if (ok) {
+      cachedData = data;
+      localStorage.setItem(MY_BRING_KEY, JSON.stringify({ name, item }));
+      renderMenu(data);
+      renderGuestList(data.rsvps, data.guestBringing);
+      syncBringUI(data);
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Add to menu →';
+      alert('Something went wrong. Please try again.');
+    }
+  }
+
   async function saveAdminSettings() {
     const statusEl = document.getElementById('admin-status');
     statusEl.textContent = 'Saving…';
+    statusEl.style.color = '';
 
     const data = await fetchBin();
-    const dateVal  = document.getElementById('admin-date').value.trim();
-    const locVal   = document.getElementById('admin-location').value.trim();
-    const menuVal  = document.getElementById('admin-menu').value.trim();
+    const dateVal = document.getElementById('admin-date').value.trim();
+    const cityVal = document.getElementById('admin-city').value.trim();
+    const locVal = document.getElementById('admin-location').value.trim();
+    const menuVal = document.getElementById('admin-menu').value.trim();
     const bringVal = document.getElementById('admin-bring').value.trim();
+    const eventAtVal = document.getElementById('admin-event-at').value;
 
-    if (dateVal)  data.date     = dateVal;
-    if (locVal)   data.location = locVal;
-    if (bringVal) data.bring    = bringVal;
+    if (dateVal) data.date = dateVal;
+    data.city = cityVal;
+    if (locVal) data.location = locVal;
+    if (bringVal) data.bring = bringVal;
+    if (eventAtVal) data.eventAt = new Date(eventAtVal).toISOString();
+    data.allowGuestBringing = document.getElementById('admin-allow-bringing').checked;
+
     if (menuVal) {
       data.menu = menuVal.split('\n').filter(l => l.trim()).map(l => {
         const [name, ...rest] = l.split('-');
@@ -575,7 +1418,10 @@
 
     const ok = await putBin(data);
     if (ok) {
+      cachedData = data;
       renderSettings(data);
+      renderGuestList(data.rsvps, data.guestBringing);
+      syncBringUI(data);
       statusEl.textContent = 'Saved! All visitors will see the updated content.';
       setTimeout(() => { statusEl.textContent = ''; }, 4000);
     } else {
@@ -585,18 +1431,23 @@
   }
 
   async function resetGuestList() {
-    if (!confirm('Reset the guest list? Use this after the brunch is over. Cannot be undone.')) return;
+    if (!confirm('Reset the guest list and contributions? Use this after brunch is over. Cannot be undone.')) return;
     const statusEl = document.getElementById('admin-reset-status');
     statusEl.textContent = 'Resetting…';
 
     const data = await fetchBin();
     data.rsvps = [];
+    data.guestBringing = [];
     const ok = await putBin(data);
 
     if (ok) {
+      cachedData = data;
       localStorage.removeItem(MY_RSVP_KEY);
-      renderGuestList([]);
+      localStorage.removeItem(MY_BRING_KEY);
+      renderGuestList([], []);
+      renderMenu(data);
       clearMyRsvp();
+      syncBringUI(data);
       statusEl.textContent = 'Guest list cleared. Ready for next month!';
       setTimeout(() => { statusEl.textContent = ''; }, 4000);
     } else {
@@ -605,14 +1456,9 @@
     }
   }
 
-  /* ---- Admin unlock sequence ----
-     ?host in URL  → enables sequence
-     Title ×5 fast → arms hotspot
-     Hotspot click → reveals panel
-  ---------------------------------------- */
   const hostModeEnabled = new URLSearchParams(window.location.search).has('host');
-  let titleClicks  = 0;
-  let clickTimer   = null;
+  let titleClicks = 0;
+  let clickTimer = null;
   let hotspotArmed = false;
 
   document.getElementById('hero-title').addEventListener('click', () => {
@@ -621,7 +1467,7 @@
     clearTimeout(clickTimer);
     clickTimer = setTimeout(() => { titleClicks = 0; }, 1000);
     if (titleClicks >= 5) {
-      titleClicks  = 0;
+      titleClicks = 0;
       hotspotArmed = true;
       clearTimeout(clickTimer);
     }
@@ -635,7 +1481,17 @@
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
+  function syncHeroDivider() {
+    const title = document.getElementById('hero-title');
+    const divider = document.getElementById('hero-divider');
+    if (title && divider) divider.style.width = `${title.offsetWidth}px`;
+  }
+
+  window.addEventListener('resize', syncHeroDivider);
+  if (document.fonts) document.fonts.ready.then(syncHeroDivider);
+
   init();
+  syncHeroDivider();
 </script>
 </body>
 </html>
